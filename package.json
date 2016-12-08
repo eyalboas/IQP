@@ -4,7 +4,8 @@
   "description": "IQP Exam",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "test": "./node_modules/.bin/mocha --reporter spec"
   },
   "dependencies": {
     "ejs": "^2.5.5",
@@ -12,5 +13,9 @@
   },
   "engines": {
     "node": "4.4.0"
+  },
+  "devDependencies": {
+    "chai": "^3.2.0",
+    "chai-http": "^1.0.0"
   }
 }
