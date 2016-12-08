@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="../test.js"></script>
+    <script>
+        function collect() {
+            $.get('http://localhost:3000/collect', function (employeeData) {
+                console.log(employeeData);
+            })
+        }
+
+        function test1(department) {
+            var departmentEmployees = [];
+            var managerObj = {};
+            if (department.Manager) {
+                managerObj.firsyName = department.Manager.FirstName;
+                managerObj.lastyName = department.Manager.LastName;
+                departmentEmployees.push(managerObj);
+            }
+            if (department.Employees) {
+                var employees = department.Employees;
+                for (var j = 0; j < employees.length; j++) {
+                    var employeeObj = {};
+                    employeeObj.FirstName = employees[j].FirstName;
+                    employeeObj.lastName = employees[j].LastName;
+                    departmentEmployees.push(employeeObj);
+                }
+            }
+
+            if (!department.SubDepartments) {
+                employeesArray = employeesArray.concat(departmentEmployees);
+                return employeesArray;
+            }
+            var subDepartments = department.SubDepartments;
+            for (var i = 0; i < subDepartments.length; i++) {
+                test1(subDepartments[i]);
+            }
+
+            employeesArray = employeesArray.concat(departmentEmployees);
+            return employeesArray;
+        }
+
+        function test(subDepartments) {
+            for (var index = 0; index < subDepartments.length; index++) {
+                test1(subDepartments[index]);
+            }
+            return employeesArray;
+        }
+
+
+        var employeesArray = [];
+        window.onload = function () {
+            test(data.SubDepartments);
+        }
+
+
+    </script>
+</head>
+<body>
+<button onclick="collect()">Click Me</button>
+</body>
+</html>
